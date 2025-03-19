@@ -11,7 +11,7 @@
         <h1>Welcome to My GitHub Projects</h1>
         <nav class="nav">
             <a href="#projects" class="nav-link">Projects</a>
-            <a href="register.html" class="nav-link">Register</a>
+            <a href="./register.php?debug=true" class="nav-link">Register</a> <!-- Ensure correct relative path -->
         </nav>
     </header>
     <main class="main">
@@ -28,6 +28,9 @@
                 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
+                
+                <!-- Add a hidden debug field -->
+                <input type="hidden" name="debug" value="true">
                 
                 <button type="submit">Login</button>
             </form>

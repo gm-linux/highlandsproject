@@ -1,5 +1,13 @@
 <?php
-$servername = "localhost";
+// Debugging output to check if the script is reached
+if (isset($_GET['debug']) && $_GET['debug'] === 'true') {
+    echo "Register.php script reached successfully.<br>";
+}
+
+// Simulate basic functionality for testing
+echo "This is the registration page.<br>";
+
+$servername = "74.208.248.189";
 $username = "reikanjordan";
 $password = "Amee1166@!@";
 $dbname = "highlands_project";
