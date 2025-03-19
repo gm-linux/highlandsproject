@@ -31,3 +31,5 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+console.log("Loaded JWT Secret:", process.env.JWT_SECRET);
