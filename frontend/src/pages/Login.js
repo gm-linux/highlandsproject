@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 import { useState } from "react";
 import { setToken } from "../utils/auth"; // ✅ Import the auth functions
@@ -27,3 +28,5 @@ const Login = () => {
 };
 
 export default Login;
+=======
+>>>>>>> 30ed33848d0364684de1ec540f10022d2146bd1d
