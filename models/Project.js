@@ -24,6 +24,7 @@ const Project = sequelize.define("Project", {
   },
 });
 
+// Define relationships
 User.hasMany(Project, { foreignKey: "createdBy" });
 Project.belongsTo(User, { foreignKey: "createdBy" });
 
