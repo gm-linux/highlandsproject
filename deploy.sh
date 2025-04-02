@@ -1,17 +1,31 @@
 #!/bin/bash
-echo "Pulling latest changes from GitHub..."
+
+set -e  # Stop on errors
+
 cd /var/www/highlandsproject.com
 
-# Ensure no local changes
-git reset --hard origin/main
+echo "---- Deploy started at $(date) ----" >> /var/log/deploy.log
 
-# Pull the latest code
+git reset --hard HEAD
+git clean -fd
 git pull origin main
 
-# Install dependencies
+# Backend
 npm install
 
-# Restart the Node.js server (adjust if using PM2)
-pm2 restart highlandsproject || pm2 start server.js --name highlandsproject
+# Frontend
+cd frontend
+npm install
+npm run build
 
-echo "Deployment complete!"
+# Deploy built frontend
+rm -rf ../public
+mv build ../public
+
+cd ..
+
+# Reload services
+pm2 restart deployer || pm2 start webhook.js --name deployer
+sudo systemctl reload apache2
+
+echo "---- Deploy finished at $(date) ----" >> /var/log/deploy.log
