@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlands Project</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=1">
 </head>
-<body>
-    <h1>Welcome to Highlands Project</h1>
-    <p>This is a simple static site served directly by Apache.</p>
 
-    <script src="js/main.js"></script>
+<body>
+    <header>
+        <h1>Highlands Project</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section id="about">
+        <h2>About</h2>
+        <p>This project aims to bring simplicity to web development.</p>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <p>Showcase your projects here.</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <form id="contact-form" onsubmit="handleContactForm(event)">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <textarea id="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+        <p id="form-status"></p>        
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Highlands Project</p>
+    </footer>
+
+    <script src="js/main.js?v=1"></script>
 </body>
+
 </html>
