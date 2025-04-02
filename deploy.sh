@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e  # Stop on errors
+set -e
 
 cd /var/www/highlandsproject.com
 
@@ -18,14 +18,17 @@ cd frontend
 npm install
 npm run build
 
-# Deploy built frontend
+# Deploy frontend
 rm -rf ../public
 mv build ../public
 
 cd ..
 
-# Reload services
+# Restart backend + webhook
+pm2 restart backend || pm2 start server.js --name backend
 pm2 restart deployer || pm2 start webhook.js --name deployer
+pm2 save
+
 sudo systemctl reload apache2
 
 echo "---- Deploy finished at $(date) ----" >> /var/log/deploy.log
