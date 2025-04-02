@@ -3,19 +3,33 @@ html {
 }
 
 body {
+<<<<<<< HEAD
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
+=======
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+>>>>>>> 85529c4c55252fa79db5ed4c12cc42268921faaa
     color: #333;
     background: #f7f7f7;
 }
 
 header {
+<<<<<<< HEAD
     background: #005577;
     color: white;
     text-align: center;
     padding: 20px;
+=======
+    background: #006699;
+    padding: 20px;
+    color: white;
+    text-align: center;
+>>>>>>> 85529c4c55252fa79db5ed4c12cc42268921faaa
 }
 
 nav a {
@@ -24,6 +38,7 @@ nav a {
     text-decoration: none;
 }
 
+<<<<<<< HEAD
 nav a:hover {
     text-decoration: underline;
 }
@@ -58,6 +73,11 @@ button {
 
 button:hover {
     background: #003f5c;
+=======
+section {
+    padding: 40px;
+    text-align: center;
+>>>>>>> 85529c4c55252fa79db5ed4c12cc42268921faaa
 }
 
 footer {
@@ -65,5 +85,11 @@ footer {
     color: #aaa;
     text-align: center;
     padding: 10px;
+<<<<<<< HEAD
     margin-top: 40px;
+=======
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+>>>>>>> 85529c4c55252fa79db5ed4c12cc42268921faaa
 }
