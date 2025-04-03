@@ -6,18 +6,20 @@ cd /var/www/highlandsproject.com
 
 echo "---- Deploy started at $(date) ----" >> /var/www/highlandsproject.com/deploy.log
 
+# Reset repo
 git reset --hard HEAD
 git clean -fd
 git pull origin main
 
-# Backend
-npm install
+# Backend install (clean)
+npm ci --omit=dev
 
-# Restart backend + webhook
-pm2 restart backend || pm2 start server.js --name backend
-pm2 restart deployer || pm2 start webhook.js --name deployer
+# Restart correct PM2 services
+pm2 restart highlands-backend || pm2 start server.js --name highlands-backend
+pm2 restart highlands-webhook || pm2 start webhook.js --name highlands-webhook
 pm2 save
 
-sudo systemctl reload apache2
+# Reload apache ONLY if needed (optional)
+# sudo systemctl reload apache2
 
 echo "---- Deploy finished at $(date) ----" >> /var/www/highlandsproject.com/deploy.log
