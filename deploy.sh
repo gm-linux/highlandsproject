@@ -5,7 +5,7 @@ LOG_FILE="$DEPLOY_DIR/deploy.log"
 
 echo "---- DEPLOYMENT STARTED at $(date) ----" | tee -a "$LOG_FILE"
 
-cd "$DEPLOY_DIR" || exit 1
+cd "$DEPLOY_DIR" || { echo "Failed to change directory"; exit 1; }
 
 # Reset & Pull latest changes
 echo "[Git] Resetting and pulling latest code" | tee -a "$LOG_FILE"
@@ -31,3 +31,12 @@ pm2 save >> "$LOG_FILE" 2>&1
 # sudo systemctl reload apache2
 
 echo "---- DEPLOYMENT FINISHED at $(date) ----" | tee -a "$LOG_FILE"
+
+# Debugging the status of the services
+echo "[PM2] Current status of PM2 processes:" | tee -a "$LOG_FILE"
+pm2 status >> "$LOG_FILE" 2>&1
+
+# Debugging the port and firewall status
+echo "[Debug] Checking Apache and Backend Ports" | tee -a "$LOG_FILE"
+sudo netstat -tuln >> "$LOG_FILE" 2>&1
+sudo ufw status >> "$LOG_FILE" 2>&1
