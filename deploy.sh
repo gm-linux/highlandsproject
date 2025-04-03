@@ -13,8 +13,6 @@ git pull origin main
 # Backend
 npm install
 
-cd ..
-
 # Restart backend + webhook
 pm2 restart backend || pm2 start server.js --name backend
 pm2 restart deployer || pm2 start webhook.js --name deployer
