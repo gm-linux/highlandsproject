@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
-
 DEPLOY_DIR="/var/www/highlandsproject.com"
 LOG_FILE="$DEPLOY_DIR/deploy.log"
 
