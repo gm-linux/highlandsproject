@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Highlands Project</title>
+    <link rel="stylesheet" href="css/style.css?v=4">
+</head>
+
+<body>
+
+    <header>
+        <h1>Admin Panel</h1>
+        <nav>
+            <a href="/">Back to Home</a>
+            <button onclick="clearToken()">Logout</button>
+        </nav>        
+    </header>
+
+    <section>
+        <h2>Add New Project</h2>
+        <form id="project-form">
+            <input type="text" id="title" placeholder="Project Title" required>
+            <textarea id="description" placeholder="Project Description" required></textarea>
+            <input type="url" id="github" placeholder="GitHub Link (optional)">
+            <input type="url" id="url" placeholder="Live Demo Link (optional)">
+            <button type="submit">Add Project</button>
+        </form>
+        <p id="status"></p>
+    </section>
+
+    <section>
+        <h2>Existing Projects</h2>
+        <div id="project-list"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Highlands Project</p>
+    </footer>
+
+    <script>
+        const statusMsg = document.getElementById('status');
+        const projectList = document.getElementById('project-list');
+    
+        let token = localStorage.getItem('jwtToken');
+        if (!token) {
+             alert("Please login first!");
+             window.location.href = '/admin-login.html';
+        }
+
+    
+        async function loadProjects() {
+            projectList.innerHTML = '<p>Loading projects...</p>';
+            const res = await fetch('/projects');
+            const projects = await res.json();
+            projectList.innerHTML = '';
+    
+            if (projects.length === 0) {
+                projectList.innerHTML = '<p>No projects yet.</p>';
+                return;
+            }
+    
+            projects.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+    
+                card.innerHTML = `
+                    <h3 contenteditable="true" id="title-${p.id}">${p.title}</h3>
+                    <p contenteditable="true" id="desc-${p.id}">${p.description}</p>
+                    <input type="url" id="github-${p.id}" value="${p.github || ''}" placeholder="GitHub Link (optional)" />
+                    <input type="url" id="url-${p.id}" value="${p.url || ''}" placeholder="Live Link (optional)" />
+                    <br><br>
+                    <button onclick="updateProject(${p.id})">Save</button>
+                    <button onclick="deleteProject(${p.id})" style="color:red;">Delete</button>
+                `;
+    
+                projectList.appendChild(card);
+            });
+        }
+    
+        async function deleteProject(id) {
+            if (!confirm("Are you sure you want to delete this project?")) return;
+            const res = await fetch('/projects/' + id, {
+                method: 'DELETE',
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            if (res.ok) {
+                alert("Project deleted!");
+                loadProjects();
+            } else {
+                alert("Failed to delete project.");
+            }
+        }
+    
+        async function updateProject(id) {
+            const data = {
+                title: document.getElementById('title-' + id).innerText.trim(),
+                description: document.getElementById('desc-' + id).innerText.trim(),
+                github: document.getElementById('github-' + id).value.trim(),
+                url: document.getElementById('url-' + id).value.trim(),
+            };
+    
+            const res = await fetch('/projects/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const result = await res.json();
+            if (res.ok) {
+                alert("Project updated!");
+                loadProjects();
+            } else {
+                alert("Error: " + result.message);
+            }
+        }
+    
+        document.getElementById('project-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            statusMsg.innerText = 'Submitting...';
+    
+            const data = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                github: document.getElementById('github').value,
+                url: document.getElementById('url').value
+            };
+    
+            const res = await fetch('/projects', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const result = await res.json();
+            if (res.ok) {
+                statusMsg.innerText = '✅ Project added!';
+                loadProjects();
+                document.getElementById('project-form').reset();
+            } else {
+                statusMsg.innerText = `❌ Error: ${result.message || 'Unknown error'}`;
+            }
+        });
+    
+        function clearToken() {
+            localStorage.removeItem('jwtToken');
+            alert("Token cleared, reload to login again.");
+            location.reload();
+        }
+    
+        window.addEventListener('DOMContentLoaded', loadProjects);
+    </script>    
+
+</body>
+
+</html>

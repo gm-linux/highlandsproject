@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Highlands Project</title>
+    <link rel="stylesheet" href="css/style.css?v=5">
+</head>
+
+<body>
+
+    <header>
+        <h1>Admin Login</h1>
+        <nav><a href="/">Back to Home</a></nav>
+    </header>
+
+    <section>
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="login-status"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Highlands Project</p>
+    </footer>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const res = await fetch('/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const result = await res.json();
+
+            if (res.ok) {
+                localStorage.setItem('jwtToken', result.token);
+                document.getElementById('login-status').innerText = "✅ Login successful! Redirecting...";
+                setTimeout(() => {
+                    window.location.href = '/admin.html';
+                }, 1000);
+            } else {
+                document.getElementById('login-status').innerText = "❌ " + (result.message || 'Invalid credentials');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

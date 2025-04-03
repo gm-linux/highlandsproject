@@ -5,52 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlands Project</title>
-    <link rel="stylesheet" href="css/style.css?v=1">
+    <link rel="stylesheet" href="css/style.css?v=2">
 </head>
-<<<<<<< HEAD
-=======
 
 <body>
-    <header>
+
+    <!-- HERO -->
+    <header class="hero">
         <h1>Highlands Project</h1>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
-
-    <section>
-        <h2>Welcome</h2>
-        <p>This is your simple, fast, and clean static website served by Apache and auto-deployed through GitHub.</p>
-        <p>Use this starter to begin designing your project freely.</p>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Highlands Project</p>
-    </footer>
->>>>>>> 85529c4c55252fa79db5ed4c12cc42268921faaa
-
-<body>
-    <header>
-        <h1>Highlands Project</h1>
+        <p>Discover projects, experiments, and creations by the Highlands community.</p>
         <nav>
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
-        </nav>
+            <a href="admin-login.html">Admin Login</a>
+        </nav>        
     </header>
 
+    <!-- ABOUT -->
     <section id="about">
         <h2>About</h2>
-        <p>This project aims to bring simplicity to web development.</p>
+        <p>The Highlands Project is a platform to showcase and share different web-based projects. From personal experiments to full-fledged applications, everything has a home here.</p>
     </section>
 
+    <!-- PROJECTS -->
     <section id="projects">
         <h2>Projects</h2>
-        <p>Showcase your projects here.</p>
+        <div class="project-grid" id="project-grid">
+            <!-- Projects will load here dynamically -->
+        </div>        
     </section>
 
+    <!-- CONTACT -->
     <section id="contact">
         <h2>Contact</h2>
         <form id="contact-form" onsubmit="handleContactForm(event)">
@@ -59,14 +45,15 @@
             <textarea id="message" placeholder="Your Message" required></textarea>
             <button type="submit">Send</button>
         </form>
-        <p id="form-status"></p>        
+        <p id="form-status"></p>
     </section>
 
+    <!-- FOOTER -->
     <footer>
         <p>&copy; 2025 Highlands Project</p>
     </footer>
 
-    <script src="js/main.js?v=1"></script>
+    <script src="js/main.js?v=2"></script>
 </body>
 
 </html>
